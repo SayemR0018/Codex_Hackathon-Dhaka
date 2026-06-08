@@ -6,9 +6,12 @@ load_dotenv()
 
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
+#mentor bot 
 def mentor_bot(user_idea):
     response = client.chat.completions.create(
-        model="gpt-5.5",
+        model="gpt-5.5", #make changes to the model
+
+    #give it a role and prompt/content
         messages=[{
             "role": "user",
             "content": f"""
