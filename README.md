@@ -2,6 +2,8 @@
 
 An AI-native urban calculation and telemetry framework optimized for assessing civic infrastructure failures, waterlogging risks, and emergency triage priority metrics across Dhaka City Corporation zones. The home and health routes are public, while all municipal calculation routes are secured via JWT bearer authentication layers.
 
+![Alt Text](https://github.com/SayemR0018/Dhaka_CivicPulse_Engine/blob/108736f36759de71dbd7b9deee574280127aa7da/Dhaka%20CivicPulse%20Engine.png)
+
 ## Key Architectural Features
 - **Deterministic Token Triage:** Uses strict data input models (a, b, n) to compute resource routing without risking generative AI hallucinations.
 - **Automated Human Handoff Boundaries:** Hardcoded structural constraint flags trip 400 Bad Request exceptions or compile definitive sorting keys to seamlessly transition operational control to live human dispatchers.
