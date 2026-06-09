@@ -60,7 +60,7 @@ def get_current_user(token: str = Depends(oauth2_scheme)) -> dict:
 
 @app.get("/")
 def home() -> dict:
-    return {"message": "Hello from Codex demo"}
+    return {"message": "Welcome to Dhaka CivicPulse API Hub"}
 
 @app.get("/health")
 def health() -> dict:
@@ -80,18 +80,36 @@ def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()) -> 
 
 @app.get("/add")
 def add(a: int, b: int, current_user: dict = Depends(get_current_user)) -> dict:
+    """
+    [HUMAN HANDOFF POINT]
+    Combines localized hazard factors (a) and structural vulnerability index (b) 
+    to generate an algorithmic dispatch sorting key for human supervisors.
+    """
     return {"result": a + b}
 
 @app.get("/multiply")
 def multiply(a: int, b: int, current_user: dict = Depends(get_current_user)) -> dict:
+    """
+    Multiplies population density factor (a) by neighborhood footprint blocks (b) 
+    to calculate potential citizen impact radius for emergency zoning.
+    """
     return {"result": a * b}
 
 @app.get("/power")
 def power(a: int, b: int, current_user: dict = Depends(get_current_user)) -> dict:
+    """
+    Calculates exponential risk growth where severity base (a) expands 
+    over temporal delay intervals (b) during active flash waterlogging events.
+    """
     return {"result": a ** b}
 
 @app.get("/factorial")
 def calculate_factorial(n: int, current_user: dict = Depends(get_current_user)) -> dict:
+    """
+    [AUTOMATION LIMITATION BOUNDARY]
+    Evaluates path combinations (n!) for utility vehicle routing.
+    If permutations exceed human triage scale, exception flags trip a 400 error.
+    """
     if n < 0:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,

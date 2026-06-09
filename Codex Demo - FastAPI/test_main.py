@@ -26,12 +26,12 @@ def make_auth_headers(payload):
 def test_home():
     response = client.get("/")
     assert response.status_code == 200
-    assert response.json() == {"message": "Hello from Codex demo"}
+    assert response.json() == {"message": "Welcome to Dhaka CivicPulse API Hub"}
 
 def test_home_does_not_require_token():
     response = client.get("/", headers={"Authorization": "Bearer invalid-token"})
     assert response.status_code == 200
-    assert response.json() == {"message": "Hello from Codex demo"}
+    assert response.json() == {"message": "Welcome to Dhaka CivicPulse API Hub"}
 
 def test_health():
     response = client.get("/health")
