@@ -52,6 +52,7 @@ python -m pytest
 | `GET` | `/` | Open | Greets the client and registers API Hub connectivity. |
 | `GET` | `/health` | Open | Returns active core status validation metrics. |
 | `POST` | `/token` | Open | Verifies user credentials and issues secure bearer tokens. |
+| `POST` | `/civic/triage` | Secured | [AI Orchestrator] Analyzes mixed-language (Bangla, English, Banglish) urban reports via LLM tool calling to route downstream to corresponding telemetry routes. |
 | `GET` | `/add?a=<int>&b=<int>` | Secured | [Human Handoff] Evaluates hazard factors (a) and vulnerability indexes (b) to output a dispatcher sorting key. |
 | `GET` | `/multiply?a=<int>&b=<int>` | Secured | Multiplies density parameters (a) by block scales (b) to track citizen impact footprint. |
 | `GET` | `/power?a=<int>&b=<int>` | Secured | Calculates exponential risk acceleration where baseline severity (a) grows over time delay intervals (b). |
@@ -86,4 +87,26 @@ Response:
 
 ```json
 {"result":20}
+```
+
+3. Submit an unstructured mixed-language civic complaint for AI multi-agent triage:
+
+```bash
+curl -X POST http://127.0.0.1:8000/civic/triage \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"report": "Mirpur block 5 a panic situation created due to severe waterlogging on main roads. Standard utilities are completely blocked."}'
+```
+
+Response:
+
+```json
+{
+  "status": "Municipal Ticket Logged",
+  "action_code": "FACTORIAL_ROUTE",
+  "meta": {
+    "block_identifier": 5
+  },
+  "routing_permutations": 120
+}
 ```

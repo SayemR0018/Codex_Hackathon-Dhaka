@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta, timezone
+from unittest.mock import MagicMock
 
 import jwt
 import pytest
@@ -278,3 +279,27 @@ def test_triage_unresolved_route(monkeypatch):
     assert response.status_code == 200
     assert response.json()["status"] == "Unresolved Queue - Human Action Required"
     assert response.json()["detail"] == "Not enough details to categorize."
+
+def test_triage_endpoint_requires_authentication():
+    response = client.post("/civic/triage", json={"report": "Accident at Mirpur 10"})
+    assert response.status_code == 401
+
+def test_triage_endpoint_success_emergency_mapping(mocker):
+    # Mocking OpenAI structure dynamically to mimic tool returns
+    mock_response = MagicMock()
+    mock_message = MagicMock()
+    mock_tool_call = MagicMock()
+    
+    mock_tool_call.function.name = "dispatch_emergency_teams"
+    mock_tool_call.function.arguments = '{"hazard_index": 8, "vulnerability_weight": 7}'
+    mock_message.tool_calls = [mock_tool_call]
+    mock_message.content = None
+    mock_response.choices[0].message = mock_message
+    
+    mocker.patch("main.openai_client.chat.completions.create", return_value=mock_response)
+    
+    headers = get_auth_headers()
+    response = client.post("/civic/triage", json={"report": "Severe road crash near UIU campus!"}, headers=headers)
+    assert response.status_code == 200
+    assert response.json()["action_code"] == "ADD_ROUTE"
+    assert response.json()["priority_key"] == 15
